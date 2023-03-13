@@ -7,7 +7,6 @@ Template was built with intellij IDE in mind.
 Contents:
 
 * Maven
-* Groovy
 * Java
 * Spring
 * Swagger-Springdoc
