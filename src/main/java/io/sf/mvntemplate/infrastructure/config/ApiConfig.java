@@ -12,8 +12,8 @@ public class ApiConfig {
     public OpenAPI jokeAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Template API")
-                        .description("Template API")
+                        .title("Joke Template API")
+                        .description("Joke Template API")
                         .version("v0.0.1")
                 );
     }

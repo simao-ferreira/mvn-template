@@ -1,6 +1,6 @@
 package io.sf.mvntemplate.domain.service;
 
-import io.sf.mvntemplate.domain.service.exception.ChuckNorrisResponseException;
+import io.sf.mvntemplate.infrastructure.exception.ChuckNorrisResponseException;
 import io.sf.mvntemplate.domain.service.model.JokeDTO;
 import lombok.SneakyThrows;
 import okhttp3.ResponseBody;

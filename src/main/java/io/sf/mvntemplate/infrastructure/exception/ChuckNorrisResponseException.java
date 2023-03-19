@@ -1,4 +1,4 @@
-package io.sf.mvntemplate.domain.service.exception;
+package io.sf.mvntemplate.infrastructure.exception;
 
 import okhttp3.Response;
 

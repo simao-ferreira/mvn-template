@@ -1,5 +1,6 @@
 package io.sf.mvntemplate.domain.service;
 
+import io.sf.mvntemplate.api.model.JokeResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,11 @@ public class JokeServiceImpl implements JokeService {
     private ChuckNorrisClient chuckNorrisClient;
 
     @Override
-    public String getJoke() {
-        return chuckNorrisClient.getChuckNorrisJoke().getValue();
-    }
+    public JokeResponse getJoke() {
 
+        return JokeResponse.builder()
+                .joke(chuckNorrisClient.getChuckNorrisJoke().getValue())
+                .build();
+    }
 
 }
