@@ -20,4 +20,11 @@ public class JokeServiceImpl implements JokeService {
                 .build();
     }
 
+    @Override
+    public JokeResponse getCategoryJoke(JokeCategory category) {
+        return JokeResponse.builder()
+                .joke(chuckNorrisClient.getChuckNorrisJokeFromCategory(category).getValue())
+                .build();
+    }
+
 }

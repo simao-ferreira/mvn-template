@@ -1,10 +1,11 @@
 package io.sf.mvntemplate.domain.service;
 
-import io.sf.mvntemplate.infrastructure.exception.ChuckNorrisResponseException;
 import io.sf.mvntemplate.domain.service.model.JokeDTO;
+import io.sf.mvntemplate.infrastructure.exception.ChuckNorrisResponseException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
@@ -17,8 +18,16 @@ public class ChuckNorrisClient {
     private ChuckNorrisConnector connector;
 
     public JokeDTO getChuckNorrisJoke() {
+        return callJokeApi(connector.getJoke());
+    }
+
+    public JokeDTO getChuckNorrisJokeFromCategory(JokeCategory category) {
+        return callJokeApi(connector.getJoke(category.name().toLowerCase()));
+    }
+
+    private JokeDTO callJokeApi(Call<JokeDTO> call) {
         try {
-            Response<JokeDTO> response = connector.getJoke().execute();
+            Response<JokeDTO> response = call.execute();
 
             if (!response.isSuccessful() || response.body() == null) {
                 log.warn("Call was unsuccessful: {}", response.errorBody());

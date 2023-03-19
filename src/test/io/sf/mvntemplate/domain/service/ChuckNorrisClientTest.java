@@ -1,7 +1,7 @@
 package io.sf.mvntemplate.domain.service;
 
-import io.sf.mvntemplate.infrastructure.exception.ChuckNorrisResponseException;
 import io.sf.mvntemplate.domain.service.model.JokeDTO;
+import io.sf.mvntemplate.infrastructure.exception.ChuckNorrisResponseException;
 import lombok.SneakyThrows;
 import okhttp3.ResponseBody;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import retrofit2.Response;
 import retrofit2.mock.Calls;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -34,6 +36,22 @@ class ChuckNorrisClientTest {
         when(connector.getJoke()).thenReturn(Calls.response(successfulJoke));
         //when
         JokeDTO jokeResponse = client.getChuckNorrisJoke();
+        //then
+        assertNotNull(jokeResponse);
+        assertEquals(joke.getValue(), jokeResponse.getValue());
+    }
+
+    @Test
+    @SneakyThrows
+    void whenCategoryJokeIsRequested_shouldReturnSuccessfulResponse() {
+        //given
+        JokeDTO joke = JokeDTO.builder()
+                .value("Chuck Norris can delete the Recycling Bin")
+                .build();
+        Response<JokeDTO> successfulJoke = Response.success(joke);
+        when(connector.getJoke(JokeCategory.MOVIE.name().toLowerCase())).thenReturn(Calls.response(successfulJoke));
+        //when
+        JokeDTO jokeResponse = client.getChuckNorrisJokeFromCategory(JokeCategory.MOVIE);
         //then
         assertNotNull(jokeResponse);
         assertEquals(joke.getValue(), jokeResponse.getValue());

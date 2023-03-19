@@ -38,4 +38,21 @@ class JokeServiceImplTest {
         assertEquals(expectedResponse, response);
     }
 
+    @Test
+    @SneakyThrows
+    void whenCategoryJokeIsRequested_thenReturnSuccessfulRetrievedJoke() {
+        //given
+        JokeResponse expectedResponse = JokeResponse.builder()
+                .joke("When Chuck Norris throws exceptions, it’s across the room")
+                .build();
+        when(client.getChuckNorrisJokeFromCategory(JokeCategory.CAREER)).thenReturn(
+                JokeDTO.builder()
+                        .value("When Chuck Norris throws exceptions, it’s across the room")
+                        .build());
+        //when
+        JokeResponse response = jokeService.getCategoryJoke(JokeCategory.CAREER);
+        //then
+        assertEquals(expectedResponse, response);
+    }
+
 }

@@ -1,8 +1,9 @@
 package io.sf.mvntemplate.api.controller;
 
-import io.sf.mvntemplate.infrastructure.exception.ChuckNorrisResponseException;
 import io.sf.mvntemplate.api.model.JokeResponse;
+import io.sf.mvntemplate.domain.service.JokeCategory;
 import io.sf.mvntemplate.domain.service.JokeService;
+import io.sf.mvntemplate.infrastructure.exception.ChuckNorrisResponseException;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,22 @@ class JokeControllerTest {
         when(jokeService.getJoke()).thenReturn(response);
         //when
         mockMvc.perform(get("/v0/joke-endpoint"))
+                //then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.joke", equalTo("When Chuck Norris throws exceptions, it’s across the room")));
+    }
+
+    @Test
+    @SneakyThrows
+    void whenCategoryJokeEndpointIsTriggered_shouldReturnAJoke() {
+        //given
+        JokeResponse response = JokeResponse.builder()
+                .joke("When Chuck Norris throws exceptions, it’s across the room")
+                .build();
+        when(jokeService.getCategoryJoke(JokeCategory.ANIMAL)).thenReturn(response);
+        //when
+        mockMvc.perform(get("/v0/category-joke-endpoint")
+                        .param("category", JokeCategory.ANIMAL.toString()))
                 //then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.joke", equalTo("When Chuck Norris throws exceptions, it’s across the room")));
