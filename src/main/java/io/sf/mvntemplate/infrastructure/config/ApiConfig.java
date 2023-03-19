@@ -14,7 +14,7 @@ public class ApiConfig {
                 .info(new Info()
                         .title("Joke Template API")
                         .description("Joke Template API")
-                        .version("v0.0.1")
+                        .version("v0.0.2")
                 );
     }
 }
